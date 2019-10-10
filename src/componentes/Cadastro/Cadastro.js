@@ -8,23 +8,42 @@ const Cadastro = () => {
         const [confirmEmail, setConfirmEmail] = useState("");
         const [senha, setSenha] = useState("");
         const [numb, setNumb] = useState(1);
+        const [ count, setCount] = useState(1);
+        const [mensagem, setMensagem] = useState("");
 
+
+        const respota = texto =>{
+            setMensagem(texto);
+            setTimeout(()=>{
+                setMensagem("");
+            },2000)
+        }
         const handleClearInput = () =>{
             setNome("");
             setEmail("");
             setConfirmEmail("");
             setSenha("");
+            respota("Cadastrado feito com sucesso!! ")
         }
         const handleSubmit = (e) => {
-            e.preventDefault();
-            const payload = {
-                nome: nome,
-                email: email,
-                confirm_email: confirmEmail,
-                senha: senha
+            if(email === confirmEmail){
+                e.preventDefault();
+                const payload = {
+                    name: nome,
+                    email: email,
+                    confirm_email: confirmEmail,
+                    password: senha,
+                }
+                localStorage.setItem(`Dados ${count}`, JSON.stringify(payload));
+                setCount(count + 1);
+                
+                handleClearInput()
+
             }
-            console.log(payload)
-            handleClearInput()
+            else{
+              respota("Os email estao errados!!")
+            }
+        
         };
 
         useEffect(()=>{
@@ -48,7 +67,7 @@ const Cadastro = () => {
         return (
             <div>
             <h1> Faça seu Cadastro</h1>
-                <Button funcao={incrementar}>Incrementar</Button>
+            <p> {mensagem}</p>
             <form onSubmit={handleSubmit}>
                 <Input
                     value={nome}
@@ -96,4 +115,5 @@ export default Cadastro;
 
 
  //useEffect() seria uma funçao executa dois parametros o primeiro parametro é uma funçao e a segunda é quando vai ser executdo essa funçao
+//<Button funcao={incrementar}>Incrementar</Button>
  // 
