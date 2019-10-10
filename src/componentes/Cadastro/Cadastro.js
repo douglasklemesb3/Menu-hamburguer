@@ -26,8 +26,8 @@ const Cadastro = () => {
             respota("Cadastrado feito com sucesso!! ")
         }
         const handleSubmit = (e) => {
+            e.preventDefault();
             if(email === confirmEmail){
-                e.preventDefault();
                 const payload = {
                     name: nome,
                     email: email,
